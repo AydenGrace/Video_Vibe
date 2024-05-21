@@ -1,0 +1,27 @@
+.element {
+  color: black;
+  margin-bottom: 20px;
+}
+
+.title_section {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  h2 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+}
+
+.like_section {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  p {
+    margin: 0;
+  }
+  i {
+    cursor: pointer;
+  }
+}

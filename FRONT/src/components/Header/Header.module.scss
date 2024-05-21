@@ -1,0 +1,41 @@
+@use "../../assets/styles/mixins" as mixin;
+
+.header {
+  position: fixed;
+  width: 100%;
+  padding: 10px 20px;
+  height: 58px;
+  background-color: var(--gray-1);
+  color: white;
+  box-shadow: var(--box-shadow-nav);
+  color: var(--primary);
+  z-index: 2;
+  img {
+    width: 130px;
+    cursor: pointer;
+  }
+  a {
+    color: white;
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+.headerList {
+  @include mixin.xs {
+    display: none;
+  }
+}
+
+.headerXs {
+  display: none !important;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  &:hover {
+    opacity: 0.8;
+  }
+  @include mixin.xs {
+    display: block !important;
+  }
+}

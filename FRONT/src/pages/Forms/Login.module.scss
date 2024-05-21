@@ -1,0 +1,25 @@
+.Forgot {
+  justify-content: flex-end;
+  font-size: 0.8rem;
+  a {
+    text-decoration: underline;
+    &:visited {
+      color: white;
+    }
+  }
+  a:hover {
+    color: var(--primary);
+    text-decoration-color: var(--primary);
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.pointer {
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  color: black;
+}
