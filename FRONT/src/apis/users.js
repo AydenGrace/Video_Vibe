@@ -32,6 +32,22 @@ export async function signin(values) {
   }
 }
 
+export async function searchById(_id) {
+  try {
+    const response = await fetch(`${BASE_URL}/findId`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ _id: _id }),
+    });
+    const newUser = await response.json();
+    return newUser;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function forgotPwd(mail) {
   try {
     const response = await fetch(`${BASE_URL}/forgotPassword`, {

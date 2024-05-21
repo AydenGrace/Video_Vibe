@@ -9,6 +9,13 @@ const {
   sendPasswordChanged,
 } = require("../email/email");
 
+const getUserbyId = async (req, res) => {
+  const { _id } = req.body;
+  const isUser = await User.findOne({ _id });
+  if (isUser) res.json({ user: isUser });
+  else res.status(400).json({ message: "Utilisateur introuvable" });
+};
+
 const createTokenEmail = (email) => {
   return jwt.sign({ email }, process.env.SECRET, { expiresIn: "60s" });
 };
@@ -200,4 +207,5 @@ module.exports = {
   forgotPwd,
   changePwd,
   changePwdAsConnected,
+  getUserbyId,
 };
