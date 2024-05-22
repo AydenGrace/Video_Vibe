@@ -12,6 +12,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { VideoContext } from "../../../context/VideoContext";
 
 export default function AddVideo() {
   const { user } = useContext(UserContext);
@@ -19,6 +20,7 @@ export default function AddVideo() {
   const [video, setVideo] = useState(null);
   const [videoURL, setVideoURL] = useState("");
   const [videoProgress, setVideoProgress] = useState(0);
+  const {addNewVideo} = useContext(VideoContext);
 
   const schema = yup.object({
     video: yup.mixed().required(),
@@ -55,7 +57,7 @@ export default function AddVideo() {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log(snapshot);
+        // console.log(snapshot);
         setVideoProgress(
           Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
         );
@@ -73,6 +75,7 @@ export default function AddVideo() {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setVideoURL(downloadURL.toString());
           sendToBackEnd(video, downloadURL.toString());
+          // addNewVideo(video);
         });
       }
     );
@@ -94,7 +97,9 @@ export default function AddVideo() {
       });
 
       const newVid = await response.json();
-      console.log(newVid);
+      addNewVideo(newVid.video);
+      // console.log("UPLOAD RETURN : ");
+      // console.log(newVid);
       resetForm();
     } catch (e) {
       console.error(e);
@@ -107,27 +112,8 @@ export default function AddVideo() {
       file: values.video[0],
     };
     try {
-      console.log(videoToUpload);
+      // console.log(videoToUpload);
       await uploadFile(videoToUpload);
-      //   const message = {
-      //     title: videoToUpload.title,
-      //     url: videoURL,
-      //     creator: user._id,
-      //   };
-      //   const response = await fetch("http://localhost:5000/api/videos/upload", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify(message),
-      //   });
-
-      //   const newVid = await response.json();
-      //   console.log(newVid);
-      //   resetForm();
-      //   const input = document.getElementById("img");
-      //   input.value = "";
-      //   setAllimg([...allimg, newImg]);
     } catch (e) {
       console.error(e);
     }

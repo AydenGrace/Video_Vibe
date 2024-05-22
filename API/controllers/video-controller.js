@@ -27,46 +27,46 @@ const getVideos = async (req, res) => {
 };
 
 const addLike = async (req, res) => {
-  const { title } = req.body;
-  const vid = await Video.findOne({ title });
+  const { _id } = req.body;
+  const vid = await Video.findOne({ _id });
   if (!vid) {
     res.status(400).json({ message: "Vidéo non trouvée." });
     return;
   }
-  await Video.findOneAndUpdate({ title }, { likes: vid.likes + 1 });
+  await Video.findOneAndUpdate({ _id }, { likes: vid.likes + 1 });
   res.json({ message: "Like ajouté." });
 };
 
 const removeLike = async (req, res) => {
-  const { title } = req.body;
-  const vid = await Video.findOne({ title });
+  const { _id } = req.body;
+  const vid = await Video.findOne({ _id });
   if (!vid) {
     res.status(400).json({ message: "Vidéo non trouvée." });
     return;
   }
-  await Video.findOneAndUpdate({ title }, { likes: vid.likes - 1 });
+  await Video.findOneAndUpdate({ _id }, { likes: vid.likes - 1 });
   res.json({ message: "Like ajouté." });
 };
 
 const addDislike = async (req, res) => {
-  const { title } = req.body;
-  const vid = await Video.findOne({ title });
+  const { _id } = req.body;
+  const vid = await Video.findOne({ _id });
   if (!vid) {
     res.status(400).json({ message: "Vidéo non trouvée." });
     return;
   }
-  await Video.findOneAndUpdate({ title }, { dislikes: vid.dislikes + 1 });
+  await Video.findOneAndUpdate({ _id }, { dislikes: vid.dislikes + 1 });
   res.json({ message: "Dislike ajouté." });
 };
 
 const removeDislike = async (req, res) => {
-  const { title } = req.body;
-  const vid = await Video.findOne({ title });
+  const { _id } = req.body;
+  const vid = await Video.findOne({ _id });
   if (!vid) {
     res.status(400).json({ message: "Vidéo non trouvée." });
     return;
   }
-  await Video.findOneAndUpdate({ title }, { dislikes: vid.dislikes - 1 });
+  await Video.findOneAndUpdate({ _id }, { dislikes: vid.dislikes - 1 });
   res.json({ message: "Dislike ajouté." });
 };
 

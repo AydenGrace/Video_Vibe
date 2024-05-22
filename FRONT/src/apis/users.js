@@ -96,3 +96,19 @@ export async function changePwdAsConnected(message) {
     console.error(error);
   }
 }
+
+export async function updateUser(values) {
+  try {
+    const response = await fetch(`${BASE_URL}/updateUser`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    const message = await response.json();
+    return message;
+  } catch (error) {
+    console.error(error);
+  }
+}
