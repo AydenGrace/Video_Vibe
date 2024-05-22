@@ -36,7 +36,7 @@ export default function VideoCard({ Video }) {
   }, []);
 
   const getTime = () => {
-    const lastUpdate = new Date(Video.updatedAt);
+    const lastUpdate = new Date(Video.createdAt);
     let seperateTime = Date.now() - lastUpdate;
     let message = ", il y a";
     const timeTab = [
