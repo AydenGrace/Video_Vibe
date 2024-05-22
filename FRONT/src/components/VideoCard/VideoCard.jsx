@@ -18,11 +18,14 @@ export default function VideoCard({ Video }) {
         const response = await searchById(Video.creator);
         if (response) {
           setCreator(response.user);
-          user.liked_videos.map((vid)=>{
-            if(vid._id==Video._id){
-              vid.likeOrDislike ? setLikedClass('liked') : setDisikedClass('disliked');
-            }
-          });
+          if(user)
+          {
+            user.liked_videos.map((vid)=>{
+              if(vid._id==Video._id){
+                vid.likeOrDislike ? setLikedClass('liked') : setDisikedClass('disliked');
+              }
+            });
+          }
         }
       } catch (e) {
         console.error(e);
