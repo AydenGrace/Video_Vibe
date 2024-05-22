@@ -3,6 +3,7 @@ import styles from "./VideoCard.module.scss";
 import ReactPlayer from "react-player";
 import { searchById, updateUser } from "../../apis/users";
 import { UserContext } from "../../context/UserContext";
+import { dislike, like, unDislike, unLike } from "../../apis/videos";
 
 export default function VideoCard({ Video }) {
   const { user } = useContext(UserContext);
@@ -114,19 +115,37 @@ export default function VideoCard({ Video }) {
       console.log('Video find');
       if(user.liked_videos[indexOfVid].likeOrDislike === isLike) {
         user.liked_videos.splice(indexOfVid,1);
-        isLike ? setLikedClass('') : setDisikedClass('');
+        if(isLike)
+        {
+          setLikedClass('');
+          unLike(Video);
+          Video.likes --;
+        }else{
+          setDisikedClass('');
+          unDislike(Video);
+          Video.dislikes --;
+        }
         console.log('Video delete from array');
       }
       else {
         user.liked_videos[indexOfVid].likeOrDislike = isLike
-        isLike ? setLikedClass('liked') : setDisikedClass('disliked');
         if(isLike)
         {
           setLikedClass('liked');
+          like(Video);
+          Video.likes ++;
+
           setDisikedClass('');
+          unDislike(Video);
+          Video.dislikes --;
+
         } else {
           setLikedClass('');
+          unLike(Video);
+          Video.likes --;
           setDisikedClass('disliked');
+          dislike(Video);
+          Video.dislikes ++;
         }
         console.log('Video updated');
       }
@@ -136,7 +155,16 @@ export default function VideoCard({ Video }) {
         _id: Video._id,
         likeOrDislike: isLike
       });
-      isLike ? setLikedClass('liked') : setDisikedClass('disliked');
+      if(isLike)
+        {
+          setLikedClass('liked');
+          like(Video);
+          Video.likes ++;
+        } else {
+          setDisikedClass('disliked');
+          dislike(Video);
+          Video.dislikes ++;
+        }
     }
     const response = await updateUser(user);
     console.log(response);

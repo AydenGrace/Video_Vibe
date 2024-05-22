@@ -13,12 +13,12 @@ router.post("/upload", uploadVideo);
 
 router.get("/getAll", getVideos);
 
-router.get("/addLike", addLike);
+router.patch("/addLike", addLike);
 
-router.get("/removeLike", removeLike);
+router.patch("/removeLike", removeLike);
 
-router.get("/addDislike", addDislike);
+router.patch("/addDislike", addDislike);
 
-router.get("/removeDislike", removeDislike);
+router.patch("/removeDislike", removeDislike);
 
 module.exports = router;

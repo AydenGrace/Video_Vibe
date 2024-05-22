@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:5000/api/videos";
 export async function like(values) {
     try {
         const response = await fetch(`${BASE_URL}/addLike`, {
-        method: "POST",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
@@ -19,7 +19,7 @@ export async function like(values) {
 export async function unLike(values) {
     try {
         const response = await fetch(`${BASE_URL}/removeLike`, {
-        method: "POST",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
@@ -35,7 +35,7 @@ export async function unLike(values) {
 export async function dislike(values) {
     try {
         const response = await fetch(`${BASE_URL}/addDislike`, {
-        method: "POST",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
@@ -51,7 +51,7 @@ export async function dislike(values) {
 export async function unDislike(values) {
     try {
         const response = await fetch(`${BASE_URL}/removeDislike`, {
-        method: "POST",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
