@@ -8,6 +8,7 @@ import Modal from "../../../components/Modal/Modal";
 import styles from "./Informations.module.scss";
 import { UserContext } from "../../../context/UserContext";
 import app from "../../../firebase";
+import toast from "react-hot-toast";
 
 import {
   getStorage,
@@ -90,8 +91,8 @@ export default function Informations() {
           setImgURL(downloadURL.toString());
           console.log(downloadURL.toString());
           user.avatar = downloadURL.toString();
+          toast.success("Avatar changed.");
           upUser();
-          // document.getElementById("avatar").style.backgroundColor = `white`;
         });
       }
     );
@@ -101,22 +102,6 @@ export default function Informations() {
     const response = await updateUser(user);
     updateLocalUser(user);
   };
-
-  // async function submit(values) {
-  //   const message = {
-  //     ...values,
-  //     _id: user._id,
-  //   };
-  //   console.log(message);
-  //   try {
-  //     const response = await changePwdAsConnected(message);
-  //     setFeedback(response.message);
-  //     reset(defaultValues);
-  //     setShowModal(true);
-  //   } catch (e) {
-  //     console.error(e);
-  //   }
-  // }
 
   return (
     <div className={`d-flex flex-fill flex-column ${styles.page}`}>
@@ -146,63 +131,6 @@ export default function Informations() {
       <p>
         <strong>My username :</strong> {user.username}
       </p>
-      {/* <p>
-        <strong>Mon adresse mail :</strong> {user.email}
-      </p> */}
-      {/* <div className={`d-flex card flex-column center p-20 ${styles.card}`}>
-        <strong>Changer mon mot de passe</strong>
-        <form onSubmit={handleSubmit(submit)} className="d-flex flex-column ">
-          <div className="d-flex flex-column mb-20">
-            <label htmlFor="password">Mot de passe actuel</label>
-            <input
-              {...register("oldPassword")}
-              type="password"
-              id="oldPassword"
-              className="mb-10"
-            />
-            {errors.oldPassword && (
-              <p className="text-error">{errors.oldPassword.message}</p>
-            )}
-          </div>
-          <div className="d-flex flex-column ">
-            <label htmlFor="password">Nouveau mot de passe</label>
-            <input
-              {...register("password")}
-              type="password"
-              id="password"
-              className="mb-10"
-            />
-            {errors.password && (
-              <p className="text-error">{errors.password.message}</p>
-            )}
-          </div>
-          <div className="d-flex flex-column">
-            <label htmlFor="confirmPassword">
-              Confirmation du mot de passe
-            </label>
-            <input
-              {...register("confirmPassword")}
-              type="password"
-              id="confirmPassword"
-              className="mb-10"
-            />
-            {errors.confirmPassword && (
-              <p className="text-error">{errors.confirmPassword.message}</p>
-            )}
-          </div>
-          <button className="btn btn-primary">Valider</button>
-        </form>
-        {showModal && (
-          <Modal onClose={handleCloseModal} feedback={feedback}>
-            <button
-              className="btn btn-reverse-primary"
-              onClick={handleCloseModal}
-            >
-              Fermer
-            </button>
-          </Modal>
-        )}
-      </div> */}
     </div>
   );
 }
