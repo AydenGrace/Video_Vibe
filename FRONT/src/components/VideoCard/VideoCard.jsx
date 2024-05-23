@@ -210,7 +210,16 @@ export default function VideoCard({ Video }) {
       </div>
       {creator && (
         <div className={`${styles.creator_section}`}>
-          <img src={creator.avatar} alt="Avatar" style={{ width: "30px" }} />
+          {/* <div
+            className={`${styles.avatar}`}
+            style={{ backgroundImage: creator.avatar }}
+            id="avatar"
+          ></div> */}
+          <img
+            src={creator.avatar}
+            alt="Avatar"
+            className={`${styles.avatar}`}
+          />
           <p>
             <strong>{creator.username}</strong>
             {time}

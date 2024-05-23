@@ -1,12 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { changePwdAsConnected, signup } from "../../../apis/users";
+import { changePwdAsConnected, signup, updateUser } from "../../../apis/users";
 import Modal from "../../../components/Modal/Modal";
 import styles from "./Informations.module.scss";
 import { UserContext } from "../../../context/UserContext";
+import app from "../../../firebase";
 
 import {
   getStorage,
@@ -16,12 +17,16 @@ import {
 } from "firebase/storage";
 
 export default function Informations() {
-  const { user } = useContext(UserContext);
+  const { user, updateLocalUser } = useContext(UserContext);
   const [feedback, setFeedback] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [img, setImg] = useState(null);
   const [imgURL, setImgURL] = useState("");
   const [imgProgress, setImgProgress] = useState(0);
+
+  useEffect(() => {
+    img && uploadFile(img);
+  }, [img]);
 
   const schema = yup.object({
     oldPassword: yup.string().required("L'ancien mot de passe est obligatoire"),
@@ -57,6 +62,7 @@ export default function Informations() {
   }
 
   const uploadFile = (file) => {
+    console.log(file);
     const storage = getStorage(app);
     const filename = new Date().getTime() + "_" + file.name;
     const storageRef = ref(storage, "images/" + filename);
@@ -82,32 +88,46 @@ export default function Informations() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImgURL(downloadURL.toString());
+          console.log(downloadURL.toString());
+          user.avatar = downloadURL.toString();
+          upUser();
+          // document.getElementById("avatar").style.backgroundColor = `white`;
         });
       }
     );
   };
 
-  async function submit(values) {
-    const message = {
-      ...values,
-      _id: user._id,
-    };
-    console.log(message);
-    try {
-      const response = await changePwdAsConnected(message);
-      setFeedback(response.message);
-      reset(defaultValues);
-      setShowModal(true);
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  const upUser = async () => {
+    const response = await updateUser(user);
+    updateLocalUser(user);
+  };
+
+  // async function submit(values) {
+  //   const message = {
+  //     ...values,
+  //     _id: user._id,
+  //   };
+  //   console.log(message);
+  //   try {
+  //     const response = await changePwdAsConnected(message);
+  //     setFeedback(response.message);
+  //     reset(defaultValues);
+  //     setShowModal(true);
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
   return (
     <div className={`d-flex flex-fill flex-column ${styles.page}`}>
       <h2>Mes informations personnelles</h2>
-      <div className={`${styles.img_container}`}>
-        <img src={user.avatar} alt="" className={`${styles.img}`} />
+      <div className={`${styles.img_container} mb-10`} id="avatar">
+        <div
+          className={`${styles.img}`}
+          id="avatar"
+          style={{ backgroundImage: `url(${user.avatar})` }}
+        ></div>
+        {/* <img src={user.avatar} alt="" className={`${styles.img}`} id="avatar" /> */}
         <div className={`${styles.edit_container}`}>
           <div className={`${styles.edit}`}>
             <i className={`fa-solid fa-pen ${styles.pointer}`}></i>
@@ -129,7 +149,7 @@ export default function Informations() {
       {/* <p>
         <strong>Mon adresse mail :</strong> {user.email}
       </p> */}
-      <div className={`d-flex card flex-column center p-20 ${styles.card}`}>
+      {/* <div className={`d-flex card flex-column center p-20 ${styles.card}`}>
         <strong>Changer mon mot de passe</strong>
         <form onSubmit={handleSubmit(submit)} className="d-flex flex-column ">
           <div className="d-flex flex-column mb-20">
@@ -182,7 +202,7 @@ export default function Informations() {
             </button>
           </Modal>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
