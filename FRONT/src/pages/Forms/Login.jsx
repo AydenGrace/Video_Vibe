@@ -89,7 +89,7 @@ export default function Login() {
           {errors.email && <p className="text-error">{errors.email.message}</p>}
         </div>
         <div className="d-flex flex-column mb-10">
-          <label htmlFor="password" className="mb-10">
+          <label htmlFor="login_password" className="mb-10">
             Mot de passe
           </label>
           <div className={`d-flex center ${styles.relative}`}>

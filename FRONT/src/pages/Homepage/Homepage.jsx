@@ -22,9 +22,9 @@ export default function Homepage() {
   // }, []);
 
   return (
-    <main className="d-flex">
+    <main className={`d-flex ${styles.page}`}>
       <div className={`d-flex flex-column flex-fill ${styles.leftColumn} p-10`}>
-        <div className="header_space"></div>
+        <div className={`${styles.header_space}`}></div>
         <AllVideos />
       </div>
       {user && (

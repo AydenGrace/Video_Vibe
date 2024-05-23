@@ -1,6 +1,24 @@
+@use "../../assets/styles/mixins" as mixin;
+
 .element {
   color: black;
   margin-bottom: 20px;
+  max-width: 640px;
+  @include mixin.md-lt {
+    max-width: 100%;
+  }
+}
+
+.player_wrapper {
+  width: auto; // Reset width
+  height: auto; // Reset height
+}
+.react_player {
+  position: relative; // Set to relative
+}
+
+.react_player > div {
+  position: absolute; // Scaling will occur since parent is relative now
 }
 
 .title_section {

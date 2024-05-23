@@ -1,15 +1,32 @@
+@use "../../assets/styles/mixins" as mixin;
+
 main {
-  width: 70%;
+  width: 100%;
+}
+
+.header_space {
+  height: 58px;
+  @include mixin.md-lt {
+    display: none;
+  }
 }
 
 .leftColumn {
-  // background-color: black;
-  width: 70%;
+  width: 100%;
 }
 
 .rightColumn {
   width: 30%;
-  height: 100vh;
-  position: fixed;
-  right: 0;
+  height: 100%;
+  @include mixin.md-lt {
+    width: 100%;
+  }
+}
+
+.page {
+  @include mixin.md-lt {
+    // display: none;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
 }

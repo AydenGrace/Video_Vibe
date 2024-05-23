@@ -10,11 +10,13 @@ import UserNotConnected from "./components/ProtectedRoutes/UserNotConnected";
 import Forgot_Pwd from "./pages/Forms/Forgot_Pwd";
 import Change_Pwd from "./pages/Forms/Change_Pwd";
 import Informations from "./pages/Profile/components/Informations";
+import { videoLoader } from "./loaders/videoLoader";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    loader: videoLoader,
     children: [
       {
         index: true,
