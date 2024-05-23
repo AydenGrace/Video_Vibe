@@ -73,3 +73,18 @@ export async function getVideos() {
     console.log(e);
   }
 }
+
+export async function uploadVideos(message) {
+  try {
+    const response = await fetch(`${BASE_URL}/upload`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(message),
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}

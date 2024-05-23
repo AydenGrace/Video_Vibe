@@ -14,6 +14,7 @@ import {
 } from "firebase/storage";
 import { createAvatar } from "@dicebear/core";
 import { lorelei } from "@dicebear/collection";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const [feedback, setFeedback] = useState("");
@@ -73,8 +74,12 @@ export default function Register() {
       setFeedback(response.message);
       if (response.message !== "Username already taken.") {
         reset(defaultValues);
+        toast.success("Account created.");
+        navigate("/login");
+      } else {
+        toast.error(response.message);
       }
-      setShowModal(true);
+      // setShowModal(true);
     } catch (error) {
       console.error(error);
     }

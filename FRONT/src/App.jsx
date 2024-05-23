@@ -4,6 +4,7 @@ import styles from "./App.module.scss";
 import { Outlet } from "react-router-dom";
 import UserProvider from "./Providers/UserProvider";
 import VideoProvider from "./Providers/VideoProvider";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         </VideoProvider>
         <Footer />
       </UserProvider>
+      <Toaster position="bottom-right" reverseOrder={false} />
     </div>
   );
 }

@@ -18,6 +18,7 @@ export default function AllVideos() {
             ))}
         </div>
       )}
+      {!allVideos.length && <p>No video.</p>}
     </section>
   );
 }

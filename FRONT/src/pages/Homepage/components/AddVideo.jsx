@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import styles from "./AddVideo.module.scss";
 import app from "../../../firebase";
+import toast from "react-hot-toast";
 
 import {
   getStorage,
@@ -13,6 +14,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { VideoContext } from "../../../context/VideoContext";
+import { uploadVideos } from "../../../apis/videos";
 
 export default function AddVideo() {
   const { user } = useContext(UserContext);
@@ -20,7 +22,7 @@ export default function AddVideo() {
   const [video, setVideo] = useState(null);
   const [videoURL, setVideoURL] = useState("");
   const [videoProgress, setVideoProgress] = useState(0);
-  const { addNewVideo } = useContext(VideoContext);
+  const { allVideos, addNewVideo } = useContext(VideoContext);
 
   const schema = yup.object({
     video: yup.mixed().required(),
@@ -88,19 +90,15 @@ export default function AddVideo() {
       creator: user._id,
     };
     try {
-      const response = await fetch("http://localhost:5000/api/videos/upload", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(message),
-      });
-
+      const response = await uploadVideos(message);
       const newVid = await response.json();
+      if (!newVid.video) {
+        toast.error(newVid.message);
+        return;
+      }
       addNewVideo(newVid.video);
-      // console.log("UPLOAD RETURN : ");
-      // console.log(newVid);
       resetForm();
+      toast.success("Video saved.");
     } catch (e) {
       console.error(e);
     }
@@ -112,19 +110,30 @@ export default function AddVideo() {
       file: values.video[0],
     };
     try {
-      // console.log(videoToUpload);
-      await uploadFile(videoToUpload);
+      if (isTitleAlreadyExist(videoToUpload.title))
+        await uploadFile(videoToUpload);
+      else toast.error("Video already exist.");
     } catch (e) {
       console.error(e);
     }
   }
+
+  const isTitleAlreadyExist = (title) => {
+    let response = true;
+    if (allVideos) {
+      allVideos.map((vid) => {
+        if (vid.title === title) response = false;
+      });
+    } else response = false;
+    return response;
+  };
 
   function resetForm() {
     reset(defaultValues);
     setVideoURL("");
     setVideo(null);
     setVideoProgress(0);
-    setFeedback("Vidéo mise en ligne.");
+    // setFeedback("Vidéo mise en ligne.");
   }
 
   return (

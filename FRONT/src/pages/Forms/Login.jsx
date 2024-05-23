@@ -7,6 +7,7 @@ import Modal from "../../components/Modal/Modal";
 import { signin } from "../../apis/users";
 import { UserContext } from "../../context/UserContext";
 import styles from "./Login.module.scss";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [feedback, setFeedback] = useState("");
@@ -44,14 +45,16 @@ export default function Login() {
       if (!response.message) {
         localStorage.setItem("user", JSON.stringify(response));
         setConnectedUser(response.user);
-        setFeedback("Welcome back.");
+        // setFeedback("Welcome back.");
         reset(defaultValues);
-        setShowModal(true);
+        toast.success(`Welcome back ${response.user.username}!`);
+        // setShowModal(true);
       } else {
-        setFeedback(response.message);
-        setShowModal(true);
+        // setFeedback(response.message);
+        toast.error(response.message);
+        // setShowModal(true);
       }
-      setShowModal(true);
+      // setShowModal(true);
     } catch (error) {
       console.error(error);
     }
