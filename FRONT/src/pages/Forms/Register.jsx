@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { signup } from "../../apis/users";
 import Modal from "../../components/Modal/Modal";
@@ -24,7 +24,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   const schema = yup.object({
-    username: yup.string().required("Le champ est obligatoire"),
+    username: yup.string().required("This is required."),
     // email: yup
     //   .string()
     //   .email()
@@ -32,16 +32,18 @@ export default function Register() {
     //   .matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, "Mail non valide"),
     password: yup
       .string()
-      .required("Le mot de passe est obligatoire")
-      .min(5, "trop court"),
+      .required("This is required.")
+      .min(12, "This is too short.")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$#!%*?&])[A-Za-z\d@$#!%*?&]{12,}$/,
+        "Your password need :\n1 lettre capitale\n1 lettre minuscule\n1 chiffre\n1 caractère spécial (&@$#!%*?&)"
+      ),
     confirmPassword: yup
       .string()
-      .required("Vous devez confirmer votre mot de passe")
-      .oneOf([yup.ref("password"), ""], "Les mots ne correspondent pas"),
-    gender: yup.string().required("Ce champs est obligatoire"),
-    rgpd: yup
-      .boolean()
-      .oneOf([true], "Vous devez accepter les termes et les conditions"),
+      .required("This is required.")
+      .oneOf([yup.ref("password"), ""], "This is not the same."),
+    gender: yup.string().required("This is required."),
+    rgpd: yup.boolean().oneOf([true], "You need to accept all conditions."),
   });
 
   const defaultValues = {
@@ -69,7 +71,7 @@ export default function Register() {
       const response = await signup(values);
       console.log(response);
       setFeedback(response.message);
-      if (response.message !== "Email déjà existant") {
+      if (response.message !== "Username already taken.") {
         reset(defaultValues);
       }
       setShowModal(true);
@@ -98,7 +100,7 @@ export default function Register() {
 
   function handleCloseModal() {
     setShowModal(false);
-    if (feedback === "Enregistrement effectué") {
+    if (feedback === "Account created.") {
       navigate("/login");
     }
   }
@@ -107,7 +109,7 @@ export default function Register() {
       <form onSubmit={handleSubmit(submit)}>
         <div className="d-flex flex-column mb-10">
           <label htmlFor="username" className="mb-10">
-            Pseudo
+            Username
           </label>
           <input
             {...register("username")}
@@ -132,8 +134,20 @@ export default function Register() {
           {errors.email && <p className="text-error">{errors.email.message}</p>}
         </div> */}
         <div className="d-flex flex-column mb-10">
-          <label htmlFor="password" className="mb-10">
-            Mot de passe
+          <label htmlFor="password" className={`mb-10`}>
+            Password <span> </span>
+            <div className={`${styles.tooltip}`}>
+              <i className={`fa-solid fa-circle-info ${styles.icon}`}></i>
+              <div className={`${styles.tooltiptext}`}>
+                <p>Your password need at least : </p>
+                <ul>
+                  <li>1 uppercase letter</li>
+                  <li>1 lowercase letter</li>
+                  <li>1 number</li>
+                  <li>1 special character</li>
+                </ul>
+              </div>
+            </div>
           </label>
           <div className={`d-flex center ${styles.relative}`}>
             <input
@@ -163,7 +177,7 @@ export default function Register() {
         </div>
         <div className="d-flex flex-column mb-10">
           <label htmlFor="confirmPassword" className="mb-10">
-            Confirmation de mot de passe
+            Confirm Password
           </label>
           <div className={`d-flex center ${styles.relative}`}>
             <input
@@ -191,7 +205,7 @@ export default function Register() {
           )}
         </div>
         <div className="d-flex flex-column mb-20">
-          <label htmlFor="gender">Genre</label>
+          <label htmlFor="gender">Gender</label>
 
           <div>
             <input
@@ -201,7 +215,7 @@ export default function Register() {
               className="mb-10"
               value="woman"
             />
-            <label htmlFor="woman">Femme</label>
+            <label htmlFor="woman">Woman</label>
           </div>
 
           <div>
@@ -212,7 +226,7 @@ export default function Register() {
               className="mb-10"
               value="man"
             />
-            <label htmlFor="man">Homme</label>
+            <label htmlFor="man">Man</label>
           </div>
 
           <div>
@@ -223,7 +237,7 @@ export default function Register() {
               className="mb-10"
               value="other"
             />
-            <label htmlFor="other">Autre</label>
+            <label htmlFor="other">Other</label>
           </div>
           {errors.gender && (
             <p className="text-error">{errors.gender.message}</p>
@@ -237,11 +251,12 @@ export default function Register() {
               className="mr-15"
               id="rgpd"
             />
-            En soumettant ce formulaire j'accepte ...
+            I have read and understood the
+            <Link className={`${styles.underline}`}>privacy statement</Link>.
           </label>
           {errors.rgpd && <p className="text-error">{errors.rgpd.message}</p>}
         </div>
-        <button className="btn btn-primary">S'inscrire</button>
+        <button className="btn btn-primary">Signin</button>
       </form>
       {showModal && (
         <Modal onClose={handleCloseModal} feedback={feedback}>
@@ -249,7 +264,7 @@ export default function Register() {
             className="btn btn-reverse-primary"
             onClick={handleCloseModal}
           >
-            Fermer
+            Close
           </button>
         </Modal>
       )}

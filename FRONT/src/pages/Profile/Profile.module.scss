@@ -1,3 +1,10 @@
+@use "../../assets/styles/mixins" as mixin;
+
+.container {
+  @include mixin.md-lt {
+    flex-direction: column;
+  }
+}
 .onglets {
   background-color: #21202c;
   padding: 10px;
@@ -11,11 +18,12 @@
   width: 100%;
 }
 
-.container {
-  width: 100%;
-}
 .Childs {
   width: 100%;
   height: 100%;
-  // background-color: aqua;
+  @include mixin.md-lt {
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
 }

@@ -78,7 +78,7 @@ export default function Login() {
       <form onSubmit={handleSubmit(submit)}>
         <div className="d-flex flex-column mb-10">
           <label htmlFor="username" className="mb-10">
-            Nom d'utilisateur
+            Username
           </label>
           <input
             {...register("username")}
@@ -90,7 +90,7 @@ export default function Login() {
         </div>
         <div className="d-flex flex-column mb-10">
           <label htmlFor="login_password" className="mb-10">
-            Mot de passe
+            Password
           </label>
           <div className={`d-flex center ${styles.relative}`}>
             <input
@@ -115,13 +115,13 @@ export default function Login() {
           </div>
 
           <div className={`d-flex ${styles.Forgot}`}>
-            <Link to={"/forgot_password"}>Mot de passe oublié</Link>
+            <Link to={"/"}>Forgot password ?</Link>
           </div>
           {errors.password && (
             <p className="text-error">{errors.password.message}</p>
           )}
         </div>
-        <button className="btn btn-primary">Se connecter</button>
+        <button className="btn btn-primary">Connect</button>
       </form>
       {showModal && (
         <Modal onClose={handleCloseModal} feedback={feedback}>
@@ -129,7 +129,7 @@ export default function Login() {
             className="btn btn-reverse-primary"
             onClick={handleCloseModal}
           >
-            Fermer
+            Close
           </button>
         </Modal>
       )}

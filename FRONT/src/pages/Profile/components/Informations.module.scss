@@ -1,3 +1,5 @@
+@use "../../../assets/styles/mixins" as mixin;
+
 .page {
   padding: 10px;
   h2 {
@@ -9,6 +11,11 @@
   p {
     margin: 0;
     padding-bottom: 5px;
+  }
+  @include mixin.md-lt {
+    align-items: center;
+    width: 100%;
+    text-align: center;
   }
 }
 

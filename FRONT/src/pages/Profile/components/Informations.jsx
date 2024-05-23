@@ -120,7 +120,7 @@ export default function Informations() {
 
   return (
     <div className={`d-flex flex-fill flex-column ${styles.page}`}>
-      <h2>Mes informations personnelles</h2>
+      <h2>My personal informations</h2>
       <div className={`${styles.img_container} mb-10`} id="avatar">
         <div
           className={`${styles.img}`}
@@ -144,7 +144,7 @@ export default function Informations() {
       </div>
 
       <p>
-        <strong>Mon pseudo :</strong> {user.username}
+        <strong>My username :</strong> {user.username}
       </p>
       {/* <p>
         <strong>Mon adresse mail :</strong> {user.email}

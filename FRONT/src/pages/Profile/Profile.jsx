@@ -6,16 +6,16 @@ export default function Profile() {
   return (
     <div className={`${styles.page} d-flex flex-column`}>
       <div className="header_space"></div>
-      <h1>Profil</h1>
-      <div className={`d-flex flex-fill`}>
+      <h1>Profile</h1>
+      <div className={`d-flex flex-fill ${styles.container}`}>
         <div className={`d-flex flex-fill ${styles.onglets}`}>
           <NavLink to={"/profile"} className={`btn btn-primary`}>
-            Informations personnelles
+            Personal Informations
           </NavLink>
 
           <div className="d-flex flex-fill"></div>
           <NavLink to={"/logout"} className={`btn btn-reverse-primary`}>
-            Déconnexion
+            Disconnect
           </NavLink>
         </div>
         <div className={`d-flex flex-fill ${styles.Childs}`}>

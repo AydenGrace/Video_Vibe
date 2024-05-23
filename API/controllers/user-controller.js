@@ -61,11 +61,11 @@ const signupUser = async (req, res) => {
       console.log(user);
       await user.save();
       res.status(200).json({
-        message: "Enregistrement effectué",
+        message: "Account created.",
       });
     } else {
       res.status(400).json({
-        message: "Nom d'utilisateur déjà existant",
+        message: "Username already taken.",
       });
     }
   } catch (error) {
@@ -200,14 +200,20 @@ const changePwdAsConnected = async (req, res) => {
   }
 };
 
-const updateUser = async (req,res) => {
+const updateUser = async (req, res) => {
   console.log(req.body);
-  const {_id, username, avatar, gender, liked_videos} = req.body;
-  await User.findOneAndUpdate({_id},{
-    username, avatar, gender, liked_videos
-  })
-  res.status(200).json({message: 'Utilisateur mit à jour.'})
-}
+  const { _id, username, avatar, gender, liked_videos } = req.body;
+  await User.findOneAndUpdate(
+    { _id },
+    {
+      username,
+      avatar,
+      gender,
+      liked_videos,
+    }
+  );
+  res.status(200).json({ message: "Utilisateur mit à jour." });
+};
 
 module.exports = {
   signupUser,
@@ -217,5 +223,5 @@ module.exports = {
   changePwd,
   changePwdAsConnected,
   getUserbyId,
-  updateUser
+  updateUser,
 };

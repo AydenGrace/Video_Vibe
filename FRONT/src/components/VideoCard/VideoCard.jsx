@@ -50,31 +50,31 @@ export default function VideoCard({ Video }) {
   const getTime = () => {
     const lastUpdate = new Date(Video.createdAt);
     let seperateTime = Date.now() - lastUpdate;
-    let message = ", il y a";
+    let message = "";
     const timeTab = [
       {
         valueInMilli: 31556926000,
-        unit: "année",
+        unit: "year",
         isPlural: true,
       },
       {
         valueInMilli: 2629743000,
-        unit: "mois",
+        unit: "month",
         isPlural: false,
       },
       {
         valueInMilli: 604800000,
-        unit: "semaine",
+        unit: "week",
         isPlural: true,
       },
       {
         valueInMilli: 86400000,
-        unit: "jour",
+        unit: "day",
         isPlural: true,
       },
       {
         valueInMilli: 3600000,
-        unit: "heure",
+        unit: "hour",
         isPlural: true,
       },
       {
@@ -86,7 +86,7 @@ export default function VideoCard({ Video }) {
 
     if (seperateTime < timeTab[timeTab.length - 1].valueInMilli) {
       console.log("moins d'une minute");
-      message = ", à l'instant";
+      message = ", just right now";
     } else {
       timeTab.map((time) => {
         const response = calculateTime(
@@ -98,6 +98,7 @@ export default function VideoCard({ Video }) {
         message += response.text;
         seperateTime = response.newTime;
       });
+      message += " ago";
     }
     message += ".";
     setTime(message);

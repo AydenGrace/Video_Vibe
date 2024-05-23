@@ -20,7 +20,7 @@ export default function AddVideo() {
   const [video, setVideo] = useState(null);
   const [videoURL, setVideoURL] = useState("");
   const [videoProgress, setVideoProgress] = useState(0);
-  const {addNewVideo} = useContext(VideoContext);
+  const { addNewVideo } = useContext(VideoContext);
 
   const schema = yup.object({
     video: yup.mixed().required(),
@@ -129,7 +129,7 @@ export default function AddVideo() {
 
   return (
     <section className={`${styles.section}`}>
-      <h2>Ajouter une vidéo</h2>
+      <h2>Add a Video</h2>
       <form
         className="d-flex center flex-column"
         onSubmit={handleSubmit(submit)}
@@ -144,7 +144,7 @@ export default function AddVideo() {
           className="mb-10"
         />
         <div className="d-flex flex-column">
-          <label htmlFor="name">Nom de la vidéo</label>
+          <label htmlFor="name">Title</label>
           <input
             {...register("name")}
             type="text"
@@ -154,7 +154,7 @@ export default function AddVideo() {
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          Envoyer
+          Send
         </button>
       </form>
       <p>{videoProgress > 0 ? `Uploading ${videoProgress}%` : ""}</p>
