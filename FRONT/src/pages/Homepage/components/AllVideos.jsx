@@ -4,16 +4,18 @@ import VideoCard from "../../../components/VideoCard/VideoCard";
 import { VideoContext } from "../../../context/VideoContext";
 
 export default function AllVideos() {
-  const {allVideos} = useContext(VideoContext);
-
+  const { allVideos } = useContext(VideoContext);
+  console.log(allVideos);
   return (
     <section className={`${styles.section}`}>
       <h1>AllVideos</h1>
       {allVideos && (
         <div>
-          {allVideos.map((vid) => (
-            <VideoCard Video={vid} key={vid._id} />
-          ))}
+          {allVideos
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .map((vid) => (
+              <VideoCard Video={vid} key={vid._id} />
+            ))}
         </div>
       )}
     </section>

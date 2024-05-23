@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { VideoContext } from "../../context/VideoContext";
+import { VideoContext } from "../context/VideoContext";
 import { Link, useLoaderData } from "react-router-dom";
 
 export default function VideoProvider({ children }) {

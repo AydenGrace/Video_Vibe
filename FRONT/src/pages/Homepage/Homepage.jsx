@@ -6,20 +6,6 @@ import AllVideos from "./components/AllVideos";
 
 export default function Homepage() {
   const { user } = useContext(UserContext);
-  // const [allVideos, setAllVideos] = useState([]);
-  // useEffect(() => {
-  //   async function getVideos() {
-  //     try {
-  //       const response = await fetch("http://localhost:5000/api/videos/getAll");
-  //       const VideosList = await response.json();
-  //       console.log(VideosList);
-  //       setAllVideos(VideosList);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   }
-  //   getVideos();
-  // }, []);
 
   return (
     <main className={`d-flex ${styles.page}`}>
