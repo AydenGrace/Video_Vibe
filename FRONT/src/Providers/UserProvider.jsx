@@ -39,8 +39,11 @@ export default function UserProvider({ children }) {
   }
 
   function isTokenValid(token) {
-    const decodedToken = JSON.parse(atob(token.split(".")[1]));
-    return decodedToken.exp * 1000 > new Date().getTime();
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      return decodedToken.exp * 1000 > new Date().getTime();
+    }
+    return false;
   }
 
   return (

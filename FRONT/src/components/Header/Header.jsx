@@ -6,13 +6,13 @@ import { UserContext } from "../../context/UserContext";
 function Header() {
   const { user } = useContext(UserContext);
   const [openMenu, setOpenMenu] = useState(false);
-  console.log(user);
+  // console.log(user);
 
-  function handleBurgerMenu() {
+  async function handleBurgerMenu() {
     setOpenMenu(!openMenu);
     let overlay = document.getElementById("overlay");
     let sidebar = document.getElementById("sidebar");
-    if (openMenu) {
+    if (!openMenu) {
       overlay.style.display = "block";
       sidebar.style.transform = "translateX(0)";
     } else {

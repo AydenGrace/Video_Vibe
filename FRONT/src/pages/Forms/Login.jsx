@@ -44,7 +44,7 @@ export default function Login() {
       if (!response.message) {
         localStorage.setItem("user", JSON.stringify(response));
         setConnectedUser(response.user);
-        setFeedback("Connexion réussie");
+        setFeedback("Welcome back.");
         reset(defaultValues);
         setShowModal(true);
       } else {
@@ -68,7 +68,7 @@ export default function Login() {
 
   function handleCloseModal() {
     setShowModal(false);
-    if (feedback === "Connexion réussie") {
+    if (feedback === "Welcome back.") {
       navigate("/");
     }
   }

@@ -11,12 +11,14 @@ import Forgot_Pwd from "./pages/Forms/Forgot_Pwd";
 import Change_Pwd from "./pages/Forms/Change_Pwd";
 import Informations from "./pages/Profile/components/Informations";
 import { videoLoader } from "./loaders/videoLoader";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     loader: videoLoader,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -57,7 +59,13 @@ export const router = createBrowserRouter([
             <Profile />
           </UserConnected>
         ),
-        children: [{ index: true, element: <Informations /> }],
+        children: [
+          {
+            index: true,
+            element: <Informations />,
+            errorElement: <ErrorPage />,
+          },
+        ],
       },
       {
         path: "/logout",

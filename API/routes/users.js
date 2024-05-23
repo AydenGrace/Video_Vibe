@@ -1,10 +1,10 @@
 const {
   signupUser,
-  verifyMail,
   loginUser,
-  forgotPwd,
-  changePwd,
-  changePwdAsConnected,
+  // verifyMail,
+  // forgotPwd,
+  // changePwd,
+  // changePwdAsConnected,
   getUserbyId,
   updateUser,
 } = require("../controllers/user-controller");
@@ -15,13 +15,13 @@ router.post("/signup", signupUser);
 
 router.post("/signin", loginUser);
 
-router.post("/forgotPassword", forgotPwd);
+// router.post("/forgotPassword", forgotPwd);
 
-router.patch("/changePassword", changePwd);
+// router.patch("/changePassword", changePwd);
 
-router.patch("/changePasswordAsConnected", changePwdAsConnected);
+// router.patch("/changePasswordAsConnected", changePwdAsConnected);
 
-router.get("/verifyMail/:token", verifyMail);
+// router.get("/verifyMail/:token", verifyMail);
 
 router.post("/findId", getUserbyId);
 
