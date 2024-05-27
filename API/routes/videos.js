@@ -5,6 +5,7 @@ const {
   removeLike,
   addDislike,
   removeDislike,
+  getVideosAndCreators,
 } = require("../controllers/video-controller");
 
 const router = require("express").Router();
@@ -12,6 +13,8 @@ const router = require("express").Router();
 router.post("/upload", uploadVideo);
 
 router.get("/getAll", getVideos);
+
+router.get("/getAllandCreators", getVideosAndCreators);
 
 router.patch("/addLike", addLike);
 

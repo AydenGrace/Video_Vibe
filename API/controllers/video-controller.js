@@ -26,6 +26,11 @@ const getVideos = async (req, res) => {
   res.json(Videos);
 };
 
+const getVideosAndCreators = async (req, res) => {
+  const Videos = await Video.find().populate();
+  res.json(Videos);
+};
+
 const addLike = async (req, res) => {
   const { _id } = req.body;
   const vid = await Video.findOne({ _id });
@@ -77,4 +82,5 @@ module.exports = {
   addLike,
   removeDislike,
   removeLike,
+  getVideosAndCreators,
 };
